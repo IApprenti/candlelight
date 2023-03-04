@@ -1,0 +1,3 @@
+[tool.ruff]
+# See: https://github.com/charliermarsh/ruff#configuration
+line-length = 240
