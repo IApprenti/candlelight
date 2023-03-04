@@ -1,0 +1,10 @@
+[TYPECHECK]
+
+# List of members which are set dynamically and missed by Pylint inference
+# system, and so shouldn't trigger E1101 when accessed.
+generated-members=numpy.*, torch.*
+
+good-names=i,j,df,x,y,z,w,x0,y0,z0,q0,q1,q2,x1,y1,z1,w1,x2,y2,z2,w2,a,b,c,d,e,f,g,h,a0,b0,c0,d0,e0,PILImage,PIL
+
+[FORMAT]
+max-line-length=240
