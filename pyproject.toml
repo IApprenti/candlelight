@@ -13,6 +13,7 @@ pytorch-lightning = "^1.9.4"
 nptyping = "^2.5.0"
 scipy = "^1.10.1"
 torchvision = "^0.14.1"
+sentence-transformers = "^2.2.2"
 
 [build-system]
 requires = ["poetry-core"]

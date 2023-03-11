@@ -211,24 +211,14 @@ tensor.shape = {self.tensor.shape if self.tensor is not None else None}
     @classmethod
     def dummy(
         cls,
+        path: str,
         conform: bool = True,
-        reconstructed: bool = False,
         name: str | None = None,
+        labels: List[str] | None = None,
     ) -> Image:
         """Create a dummy image"""
-        # Get parameters
-        params: Parameters = Parameters.dummy()
-        # Get the path
-        if not reconstructed:
-            path: str = params.dummy_anomalous_image_path if not conform else params.dummy_conform_image_path
-        else:
-            path: str = params.dummy_anomalous_reconstructed_image_path if not conform else params.dummy_conform_reconstructed_image_path
-        # Labels
-        labels: List[str] = [params.classes_labels[0]
-                             if conform else params.classes_labels[1]]
-        # Name
         if name is None:
-            name = f"dummy_image_{'conform' if conform else 'anomalous'}{'_reconstructed' if reconstructed else ''}"
+            name = "dummy_image"
         # Create the image
         return cls.from_file_path(
             path=path,
@@ -244,18 +234,14 @@ tensor.shape = {self.tensor.shape if self.tensor is not None else None}
         height: int = 400,
         name: str | None = None,
         conform: bool = True,
-        reconstructed: bool = False,
+        labels: List[str] | None = None,
     ):
         """Create an image filled with noise"""
-        # Get parameters
-        params: Parameters = Parameters.dummy()
         # Args
         tensor = torch.rand(3, width, height)
-        labels: List[str] = [params.classes_labels[0]
-                             if conform else params.classes_labels[1]]
         # Name
         if name is None:
-            name = f"dummy_image_{'conform' if conform else 'anomalous'}{'_reconstructed' if reconstructed else ''}"
+            name = "dummy_image"
         return cls(
             tensor=tensor,
             conform=conform,
