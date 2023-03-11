@@ -71,6 +71,7 @@
 			"neighbourhood",
 			"neighbours",
 			"Nsteps",
+			"Numpy",
 			"obstaclescost",
 			"Optim",
 			"PATCHCORE",
