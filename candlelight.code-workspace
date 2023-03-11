@@ -87,6 +87,7 @@
 			"pymath",
 			"pyplot",
 			"quantile",
+			"randn",
 			"Rangestep",
 			"residu",
 			"RESNET",
