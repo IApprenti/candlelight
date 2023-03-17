@@ -53,8 +53,43 @@ class Items:
     # Set any additional attributes.
     for key, value in kwargs.items():
       setattr(self, key, value)
-    
-
+  
+  #######################
+  ###   Create from   ###
+  #######################
+  
+  @classmethod
+  def from_classes_images(cls, path: str) -> Items | None:
+    """Create items from a directory of images arranged per class"""
+    pass
+  
+  @classmethod
+  def from_dataframe(cls, source: pd.DataFrame) -> Items | None:
+    """Create items from a dataframe"""
+    pass
+  
+  @classmethod
+  def from_csv(cls, source: str) -> Items | None:
+    """Create Items from a csv file"""
+    df: pd.DataFrame = ...
+    return cls.from_dataframe(df)
+  
+  @classmethod
+  def from_google_sheet(cls, source: str) -> Items | None:
+    """Create items from a google sheet"""
+    df: pd.DataFrame = ...
+    return cls.from_dataframe(df)
+  
+  #################################
+  ###   Torch data management   ###
+  #################################
+  
+  def dataset(self, split: str | None = None) -> Dataset:
+    pass
+  
+  def dataloader(self, split: str | None = None) -> Dataloader:
+    pass
+  
   ###################
   ###   Getters   ###
   ###################
