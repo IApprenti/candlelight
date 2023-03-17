@@ -11,10 +11,10 @@ from .. import constants as c
 
 from .item import Item
 
-class Data:
-  """Handle train, test, validation datasets and dataloaders.
-  Store the metadata in a Pandas dataframe.
-  Can save the embeddings in a monolithic tensor.
+Value = TypeVar('Value', str, int, float, bool)
+
+class Items:
+  """Save the various elements used during an AI pipeline
   """
 
   def __init__(
@@ -22,12 +22,13 @@ class Data:
     root_directory: str | None = None,
     sources: List[str] | None = None,
     splits: List[str] | None = None,
-    entries: Tensor | None = None,
+    encodings: Tensor | None = None,
     scores: Tensor | None = None,
+    scores_targets: Tensor | None = None,
+    scores_names: List[str] | None = None,
     classes: Tensor | None = None,
-    entries_names: List[str] | None = None,
-    results_names: List[str] | None = None,
-    results_tasks: List[str] | None = None,
+    classes_targets: Tensor | None = None,
+    classes_names: List[str] | None = None,
     embeddings: Tensor | None = None,
     maps: Tensor | None = None,
     reconstructions: Tensor | None = None,
@@ -37,12 +38,13 @@ class Data:
     self.root_directory: str | None = root_directory
     self.sources: List[str] | None = sources
     self.splits: List[str] | None = splits
-    self.entries: Tensor | None = entries
-    self.targets: Tensor | None = targets
-    self.results: Tensor | None = results
-    self.entries_names: List[str] | None = entries_names
-    self.results_names: List[str] | None = results_names
-    self.results_tasks: List[str] | None = results_tasks
+    self.encodings: Tensor | None = encodings
+    self.scores: Tensor | None = scores
+    self.scores_targets: Tensor | None = scores_targets
+    self.scores_names: List[str] | None = scores_names
+    self.classes: Tensor | None = classes
+    self.classes_targets: Tensor | None = classes_targets
+    self.classes_names: List[str] | None = scores_names
     self.embeddings: Tensor | None = embeddings
     self.maps: Tensor | None = maps
     self.reconstructions: Tensor | None = reconstructions
@@ -57,61 +59,30 @@ class Data:
   ###   Getters   ###
   ###################
   
-  def split(self, index: int) -> str | None:
-    """Return the source at the given index."""
-    if self.splits is None:
+  @staticmethod
+  def at_tensor_index(index: int, arr: Tensor | None) -> Tensor | None:
+    """Return the item value at the given index."""
+    if arr is None:
       return None
-    if self.splits[0] < index + 1:
+    if arr[0] < index + 1:
       return None
-    return self.splits[index]
-  
-  def source(self, index: int) -> str | None:
-    """Return the source at the given index."""
-    if self.sources is None:
-      return None
-    if self.sources[0] < index + 1:
-      return None
-    return self.sources[index]
+    return arr[index]
   
   @staticmethod
-  def at_index(index: int, tensor: Tensor | None) -> Tensor | None:
-    """Return the tensor at the given index."""
-    if tensor is None:
+  def at_list_index(index: int, arr: List[Value] | None) -> Value | None:
+    """Return the item value at the given index."""
+    if arr is None:
       return None
-    if tensor[0] < index + 1:
+    if arr[0] < index + 1:
       return None
-    return tensor[index]
-  
-  def entry(self, index: int) -> Tensor | None:
-    """Return the data at index."""
-    return Data.at_index(index, self.entries)
-  
-  def target(self, index: int) -> Tensor | None:
-    """Return the data at index."""
-    return Data.at_index(index, self.targets)
-  
-  def result(self, index: int) -> Tensor | None:
-    """Return the data at index."""
-    return Data.at_index(index, self.results)
-  
-  def embedding(self, index: int) -> Tensor | None:
-    """Return the data at index."""
-    return Data.at_index(index, self.embeddings)
-  
-  def map(self, index: int) -> Tensor | None:
-    """Return the data at index."""
-    return Data.at_index(index, self.maps)
-  
-  def reconstruction(self, index: int) -> Tensor | None:
-    """Return the data at index."""
-    return Data.at_index(index, self.reconstructions)
+    return arr[index]
   
   def item(self, index: int) -> Item | None:
     """Return the data at index."""
     return Item(
-      source=self.source(index),
-      split=self.split(index),
-      tensor=self.entry(index),
+      source=self.list_index(index,self.sources),
+      split=self.at_list_index(index,self.splits),
+      encodings=self.at_tensor_index(index, self.encodings),
     )
   
   #########################
@@ -139,17 +110,15 @@ class Data:
   
   def __getitem__(self, index: int) -> Item | NotImplementedError:
     """Return the data at the given index."""
-    return Data(
-      
-    )
+    return self.item(index)
     
   def __setitem__(self, index: int, value: Item | NotImplementedError):
     """Set the data at the given index."""
-    pass
+    self.set_item(value)
   
   def __delitem__(self, index: int):
     """Delete the data at the given index."""
-    pass
+    raise NotImplemented
   
   def __iter__(self):
     """Return an iterator over the data."""
