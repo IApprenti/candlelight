@@ -30,7 +30,7 @@ class Items:
     classes_targets: Tensor | None = None,
     classes_names: List[str] | None = None,
     embeddings: Tensor | None = None,
-    maps: Tensor | None = None,
+    heatmaps: Tensor | None = None,
     reconstructions: Tensor | None = None,
     info: Dict[str, Any] | str | None = None,
     **kwargs : Dict[str, Any],
@@ -46,7 +46,7 @@ class Items:
     self.classes_targets: Tensor | None = classes_targets
     self.classes_names: List[str] | None = scores_names
     self.embeddings: Tensor | None = embeddings
-    self.maps: Tensor | None = maps
+    self.heatmaps: Tensor | None = heatmaps
     self.reconstructions: Tensor | None = reconstructions
     self.info: Dict[str, Any] | str | None = info
     
