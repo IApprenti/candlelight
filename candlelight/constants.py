@@ -1,5 +1,33 @@
 from typing import Dict, Tuple
 
+# Data
+
+UID: str = "unique_identifier"
+STRING: str = "string"
+NAME: str = "name"
+ROOT: str = "root"
+TRAIN: str = "train"
+TEST: str = "test"
+VAL: str = "validation"
+VALIDATION: str = VAL
+GROUND_TRUTH: str = "ground truth"
+MAPPING: str = "mapping"
+MASK: str = "mask"
+SPLIT: str = "split"
+TEXT: str = "text"
+LABEL: str = "label"
+LABELS: str = "labels"
+
+# Tasks
+
+CLASSIFICATION: str = "classification"
+REGRESSION: str = "regression"
+CLUSTERING: str = "clustering"
+LOCALISATION: str = "localisation"
+SEGMENTATION: str = "segmentation"
+ANOMALY_DETECTION: str = "anomaly detection"
+EMBEDDING: str = "embedding"
+
 # Coordinate system
 
 X_INDEX: int = 0
