@@ -2,21 +2,27 @@ from typing import Dict, Tuple
 
 # Data
 
-UID: str = "unique_identifier"
+UID: str = "unique-identifier"
 STRING: str = "string"
 NAME: str = "name"
 ROOT: str = "root"
 TRAIN: str = "train"
 TEST: str = "test"
-VAL: str = "validation"
-VALIDATION: str = VAL
-GROUND_TRUTH: str = "ground truth"
+VALIDATION: str = "validation"
+VAL: str = VALIDATION
+GROUND_TRUTH: str = "ground-truth"
 MAPPING: str = "mapping"
 MASK: str = "mask"
 SPLIT: str = "split"
 TEXT: str = "text"
 LABEL: str = "label"
 LABELS: str = "labels"
+ENCODINGS: str = "encodings"
+TARGETS: str = "targets"
+PREDICTIONS: str = "predictions"
+EMBEDDINGS: str = "embeddings"
+MAPPINGS: str = "mappings"
+WEIGHTS: str = "weights"
 
 # Tasks
 
