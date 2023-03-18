@@ -23,6 +23,9 @@ PREDICTIONS: str = "predictions"
 EMBEDDINGS: str = "embeddings"
 MAPPINGS: str = "mappings"
 WEIGHTS: str = "weights"
+CLASSES: str = "classes"
+SCORES: str = "scores"
+
 
 # Tasks
 
