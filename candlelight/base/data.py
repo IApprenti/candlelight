@@ -4,6 +4,7 @@ import torch
 from torch import Tensor
 from torch.utils.data import Dataset, DataLoader
 import pickle
+from .item import Item
 
 class Data(Dataset):
     """Store several items of data.
@@ -17,6 +18,7 @@ class Data(Dataset):
             splits: List[str] | None = None,
             sources: List[str] | None = None,
             encodings: Tensor | None = None,
+            targets: Tensor | Dict[str, Tensor] | None = None,
             allow_encoding_all: bool = False,
             store_encodings: bool = False,
             cursor: int = 0,
@@ -27,6 +29,7 @@ class Data(Dataset):
         self.sources: List[str] | None = sources
         self.splits: List[str] | None = splits
         self._encodings: Tensor | None = encodings
+        self.targets: Tensor | Dict[str, Tensor] | None = targets
         self.cursor: int = cursor
         self.allow_encoding_all: bool = allow_encoding_all
         self.store_encodings: bool = store_encodings
@@ -34,6 +37,58 @@ class Data(Dataset):
 
         for key, value in kwargs.items():
           setattr(self, key, value)
+
+    ################################################
+    ###   Interoperability with the Item class   ###
+    ################################################
+
+    def item(self, index: int | None = None) -> Item:
+        """Return an item for a given index.
+        """
+        if index is None:
+            index = self.cursor
+        return Item(
+            root_directory=self.root_directory,
+            split=self.splits[index] if self.splits is not None else None,
+            source=self.sources[index] if self.sources is not None else None,
+            encoding=self.encodings[index] if self.encodings is not None else None,
+            index=index,
+            info=self.info
+        )
+    
+    def items(self) -> List[Item]:
+        """Return a list of items.
+        """
+        return [self.item(index) for index in range(len(self))]
+    
+    def item_from_source(self, source: str) -> Item:
+        """Return an item for a given source.
+        """
+        return self.item(self.sources.index(source))
+
+    def append_item(self, item: Item) -> None:
+        """Append an item to the data"""
+        if self.sources is not None and item.source is not None:
+            self.sources.append(item.source)
+        if self.splits is not None and item.split is not None:
+            self.splits.append(item.split)
+        if self._encodings is not None and self.we_have_all_encodings and item.encoding is not None:
+            self._encodings = torch.cat([self._encodings, item.encoding])
+
+    def append_items(self, items: List[Item]) -> None:
+        """Append a list of items to the data"""
+        for item in items:
+            self.append_item(item)
+
+    @property
+    def we_have_all_encodings(self) -> bool:
+        """Check if we have all the encodings.
+        """
+        if self._encodings is None:
+            return False
+        if self.sources is None:
+            return True
+        return len(self.sources) == self._encodings.shape[0]
 
     ##################################
     ###  Pytorch data management   ###
