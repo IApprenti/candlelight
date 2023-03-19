@@ -19,6 +19,8 @@ class Data(Dataset):
             sources: List[str] | None = None,
             encodings: Tensor | None = None,
             targets: Tensor | Dict[str, Tensor] | None = None,
+            predictions: Tensor | Dict[str, Tensor] | None = None,
+            tensors: Dict[str, Tensor] | None = None,  # Find a better name for this, we store score, loss, embeddings, etc.
             allow_encoding_all: bool = False,
             store_encodings: bool = False,
             cursor: int = 0,
@@ -30,6 +32,8 @@ class Data(Dataset):
         self.splits: List[str] | None = splits
         self._encodings: Tensor | None = encodings
         self.targets: Tensor | Dict[str, Tensor] | None = targets
+        self.predictions: Tensor | Dict[str, Tensor] | None = predictions
+        self.tensors: Dict[str, Tensor] | None = tensors
         self.cursor: int = cursor
         self.allow_encoding_all: bool = allow_encoding_all
         self.store_encodings: bool = store_encodings
@@ -60,10 +64,12 @@ class Data(Dataset):
         """Return a list of items.
         """
         return [self.item(index) for index in range(len(self))]
-    
-    def item_from_source(self, source: str) -> Item:
+
+    def item_from_source(self, source: str) -> Item | None:
         """Return an item for a given source.
         """
+        if self.sources is None:
+            return None
         return self.item(self.sources.index(source))
 
     def append_item(self, item: Item) -> None:
@@ -102,9 +108,9 @@ class Data(Dataset):
         return 0
     
     def __getitem__(self, index: int) -> Tensor | None:
-        if self._encodings is not None:
+        if self._encodings is not None and index < self._encodings.shape[0]:
             return self._encodings[index]
-        if self.sources is not None and index < len(self.sources):
+        elif self.sources is not None and index < len(self.sources):
             return self.encode(self.sources[index])
         return None
     
