@@ -1,6 +1,7 @@
 from typing import Dict, Tuple
 
-# Data
+# Vocabulary
+# TODO: sort that alphabetically
 
 UID: str = "unique-identifier"
 STRING: str = "string"
@@ -25,10 +26,9 @@ MAPPINGS: str = "mappings"
 WEIGHTS: str = "weights"
 CLASSES: str = "classes"
 SCORES: str = "scores"
-
-
-# Tasks
-
+SOURCE: str = "source"
+TARGET: str = "target"
+INFO: str = "info"
 CLASSIFICATION: str = "classification"
 REGRESSION: str = "regression"
 CLUSTERING: str = "clustering"
@@ -36,6 +36,11 @@ LOCALISATION: str = "localisation"
 SEGMENTATION: str = "segmentation"
 ANOMALY_DETECTION: str = "anomaly detection"
 EMBEDDING: str = "embedding"
+ENCODING: str = "encoding"
+PREDICTION: str = "prediction"
+WEIGHT: str = "weight"
+CLASS: str = "class"
+SCORE: str = "score"
 
 # Coordinate system
 
