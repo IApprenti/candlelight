@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 
 # Vocabulary
 # TODO: sort that alphabetically
@@ -71,8 +71,8 @@ MATRIX: str = "matrix"
 QUATERNION: str = "quaternion"
 S3D: str = "3d"
 S2D: str = "2d"
-VECTOR2D: str = "vector2d"
-VECTOR3D: str = "vector3d"
+VECTOR_2D: str = "vector2d"
+VECTOR_3D: str = "vector3d"
 TRANSFORM_3D: str = "homogeneous transformation matrix 3D"
 ROTATION_3D: str = "rotation matrix 3D"
 TRANSFORM_2D: str = "homogeneous transformation matrix 2D"
@@ -87,8 +87,8 @@ structure_dimensions: Dict[str, int] = {
 
 structure_shape: Dict[str, Tuple[int, ...]] = {
     SCALAR: (1,),
-    VECTOR2D: (2,),
-    VECTOR3D: (3,),
+    VECTOR_2D: (2,),
+    VECTOR_3D: (3,),
     QUATERNION: (4,),
     ROTATION_2D: (2, 2),
     ROTATION_3D: (3, 3),
@@ -97,3 +97,22 @@ structure_shape: Dict[str, Tuple[int, ...]] = {
 }
 
 RPY_CONVENTION = "xyz"
+
+# Extensions
+
+NUMPY_EXTENSIONS: Tuple[str,...] = ("npy", "npz", "np")
+NUMPY_COMPATIBLE_EXTENSIONS: Tuple[str,...] = ("npy", "npz", "csv", "txt", "tsv", "xls", "xlsx")
+IMAGE_EXTENSIONS: Tuple[str,...] = ("png", "jpg", "jpeg", "bmp", "tif", "tiff")
+VIDEO_EXTENSIONS: Tuple[str,...] = ("mp4", "avi", "mov", "mkv")
+AUDIO_EXTENSIONS: Tuple[str,...] = ("mp3", "wav", "ogg")
+TENSOR_EXTENSIONS: Tuple[str,...] = ("pt", "pth")
+PICKLE_EXTENSIONS: Tuple[str,...] = ("pkl", "pickle")
+TEXT_EXTENSIONS: Tuple[str,...] = ("txt", "csv")
+JSON_EXTENSIONS: Tuple[str,...] = ("json",)
+YAML_EXTENSIONS: Tuple[str,...] = ("yaml", "yml")
+EXCEL_EXTENSIONS: Tuple[str,...] = ("xls", "xlsx", "xlsm", "xlsb")
+DATAFRAME_EXTENSIONS: Tuple[str,...] = ("csv", "tsv", "xls", "xlsx", "xlsm", "xlsb", "odf", "ods", "odt")
+SERIALIZABLE_EXTENSIONS: Tuple[str,...] = ("json", "yaml", "yml", "pkl", "pickle")
+FEATHER_EXTENSIONS: Tuple[str,...] = ("feather",)
+PARQUET_EXTENSIONS: Tuple[str,...] = ("parquet",)
+HDF_EXTENSIONS: Tuple[str,...] = ("hdf", "hdf5", "h5")
