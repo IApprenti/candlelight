@@ -6,7 +6,7 @@ Based on PyTorch and Numpy.
 
 ## Intent
 
-I'm creating this package to store some base structures and helpers. It is a work in progress and shall be filled over the following months and years.
+This package is a place to store snippets that can be reused. It is a work in progress and shall be filled over the following months and years.
 
 ## Disclaimer
 
